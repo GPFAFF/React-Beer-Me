@@ -6,14 +6,7 @@ class Counter extends Component {
     super()
     this.state = {
       numBeers: 0,
-      beers: [],
     }
-  }
-
-  loadBeers = async (searchTerm = 'hops' ) => {
-    const beers = await fetch(`http://api.react.beer/v2/search?q=${searchTerm}&type=beer`)
-    .then(res => res.json());
-    console.log(beers);
   }
   
   incrementBeers = () => {
