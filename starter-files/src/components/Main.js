@@ -20,6 +20,18 @@ class Main extends Component {
     this.loadBeers();
   }
 
+  componentWillMount() {
+    console.log("MOUNT UP!!");
+    const params = this.props.match.params || {};
+    const searchTerm = params.searchTerm || undefined;
+    this.loadBeers(searchTerm);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('Will receive props!');
+    this.loadBeers(nextProps.match.params.searchTerm);
+  }
+
   loadBeers = async (searchTerm = 'hops' ) => {
 
     // turn on loader
