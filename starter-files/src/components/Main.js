@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import Loader from './Loader';
 import Counter from './Counter';
-//import Beer from './Beer';
-//import Search from './Search';
+import Search from './Search';
 import Results from './Results';
 
 class Main extends Component {
@@ -46,6 +45,7 @@ class Main extends Component {
       <div className="wrapper">
         <Header siteName="Beer Me!" />
         <Counter />
+        <Search />
         <Results beers={this.state.beers} loading={this.state.loading} />
       </div>
     )
