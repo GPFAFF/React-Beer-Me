@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Loader from './Loader';
+import Header from './Header';
 import Beer from './Beer'
 import PropTypes from 'prop-types';
 
@@ -17,16 +18,29 @@ class Single extends Component {
     console.log("SINGLE DID MOUNT 💩");
     this.loadBeer(this.props.match.params.beerId);
   }
+
+  loadBeer = (beerId) => {
+    console.log(`Loading beer ${beerId}`);
+    this.setState({ loading: true });
+    fetch(`http://api.react.beer/v2/beer/${beerId}`)
+      .then(data => data.json())
+      .then(res => {
+        this.setState({ beer: res.data, loading: false });
+      });
+  }
   
   loadBeer = async (beerId) => {
     const response = await fetch(`http://api.react.beer/v2/beer/${beerId}`)
-    .then(res => res.json() );
+    .then(data => data.json())
+    
+    .then(res => {
+      console.log(res);
+      this.setState({
+        beer: res.data, 
+        loading: false
+      });
+    })
   
-
-    this.setState({
-      beer: response.data, 
-      loading: false
-    });
   }
 
   render() {
@@ -37,22 +51,20 @@ class Single extends Component {
       )
     }
 
-    const {
-      nameDisplay,
-      labels
-    } = this.state.beer;
-
-    const {
-      description,
-      shortName
-    } = this.state.beer.style;
+    const { beer } = this.state;
 
     return (
-      <div className="single-beer">
-        <h2>{nameDisplay}</h2>
-        <img src={labels.medium} />
-        <h3>{shortName}</h3>
-        <p>{description}</p>
+      <div>
+        <Header siteName="Beer me!" />
+        <div className="single-beer">
+          <h2>{beer.nameDisplay}</h2>
+          <h3>{beer.description}</h3>
+          <img className="glass" src="#" />
+          <img src={beer.labels.medium} />
+          <h3 className="info"> More Info on {beer.style.name} </h3>
+          <span className="info">ABV {beer.style.abvMax}</span>
+          <p>{beer.style.description}</p>
+        </div>
       </div>
     )
   }
