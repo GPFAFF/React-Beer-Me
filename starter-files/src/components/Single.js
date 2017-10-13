@@ -29,22 +29,24 @@ class Single extends Component {
       });
   }
   
-  loadBeer = async (beerId) => {
-    const response = await fetch(`http://api.react.beer/v2/beer/${beerId}`)
-    .then(data => data.json())
-    
-    .then(res => {
-      console.log(res);
-      this.setState({
-        beer: res.data, 
-        loading: false
-      });
-    })
-  
+  renderAbv = (beer) => {
+    if (!beer.abv) return
+    return (
+      <span className="info">ABV {beer.style.abvMax}</span>
+    )
+  }
+
+  renderGlass = (beer) => {
+    if (!beer.glass) return
+    return (
+      <div className="glass">
+        <img src={`/images/glass-${beer.glass.id}.jpg`} alt={beer.name} />
+        <h3>{beer.glass.name} Glass</h3>
+      </div>
+    )
   }
 
   render() {
-
     if (this.state.loading) {
       return (
         <Loader message="Pouring a cold one! 🍻" />
@@ -59,10 +61,14 @@ class Single extends Component {
         <div className="single-beer">
           <h2>{beer.nameDisplay}</h2>
           <h3>{beer.description}</h3>
-          <img className="glass" src="#" />
           <img src={beer.labels.medium} />
+
+          <div className="beer-info">
+            {this.renderGlass(beer)}
+            {this.renderAbv(beer)}
+          </div>
+
           <h3 className="info"> More Info on {beer.style.name} </h3>
-          <span className="info">ABV {beer.style.abvMax}</span>
           <p>{beer.style.description}</p>
         </div>
       </div>
