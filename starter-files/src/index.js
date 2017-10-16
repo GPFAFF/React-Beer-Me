@@ -1,27 +1,26 @@
-// Let's Go!
-
-//alert('Wes Bos Workshop');
-
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
-import './style.css';
 import Main from './components/Main';
 import Single from './components/Single';
 
-const Root = () => {
+import { BrowserRouter, Route } from 'react-router-dom';
+
+/* Import CSS */
+import './style.css';
+
+const Root = function() {
+
+  const baseUrl = process.env.PUBLIC_URL;
+
   return (
     <BrowserRouter>
       <div>
-        <Route exact path="/" component={Main} />
-        <Route path="/search/:searchTerm" component={Main} />
-        <Route path="/beer/:beerId/:beerSlug" component={Single} />
-
-        {/* Add a 404 page<Switch> </Switch> */}
+        <Route exact path={`${baseUrl}/`}  component={Main} />
+        <Route path={`${baseUrl}/search/:searchTerm`} component={Main} />
+        <Route path={`${baseUrl}/beer/:beerId/:beerSlug`} component={Single} />
       </div>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-render(<Root />, document.querySelector('#root'))
-
+render(<Root/>, document.querySelector('#root'));

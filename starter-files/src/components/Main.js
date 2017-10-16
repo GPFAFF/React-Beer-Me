@@ -41,11 +41,13 @@ class Main extends Component {
 
     const response = await fetch(`http://api.react.beer/v2/search?q=${searchTerm}&type=beer`)
     .then(res => res.json());
-    
+
+    console.log("****RESPONSE***", response);
+
     const filteredBeers = response.data.filter(beer => beer.labels);
 
     this.setState({
-      beers: filteredBeers, 
+      beers: filteredBeers,
       loading: false
     });
 
